@@ -2,20 +2,20 @@ export type Role = 'admin' | 'operator';
 
 export interface User {
   id: string;
-  username: string;
   name: string;
   role: Role;
+  avatar?: string;
 }
 
 export interface Product {
   id: string;
-  barcode: string;
   name: string;
+  barcode: string;
   category: string;
+  unit: string;
   stockGudang: number;
   stockToko: number;
   minStock: number;
-  unit: string;
   price: number;
   image?: string;
 }

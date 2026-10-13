@@ -34,11 +34,11 @@ function AppContent() {
     <div className="min-h-screen bg-gray-50">
       <Navigation />
       {/* Mobile Layout */}
-      <main className="md:hidden">
+      <main className="md:hidden pt-14 pb-20">
         {renderPage()}
       </main>
       {/* Desktop Layout */}
-      <main className="hidden md:block md:ml-64">
+      <main className="hidden md:block md:ml-64 min-h-screen">
         {renderPage()}
       </main>
     </div>

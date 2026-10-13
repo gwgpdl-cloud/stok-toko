@@ -1,8 +1,12 @@
 @import "tailwindcss";
 
-/* Safe area for mobile bottom navigation */
+/* Safe area for mobile */
 .safe-area-bottom {
   padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+.safe-area-top {
+  padding-top: env(safe-area-inset-top, 0px);
 }
 
 /* Custom scrollbar */
@@ -29,7 +33,7 @@
   -webkit-tap-highlight-color: transparent;
 }
 
-/* Animation for success feedback */
+/* Animation for slide up */
 @keyframes slideUp {
   from {
     transform: translateY(100%);
@@ -48,29 +52,53 @@
 /* Mobile optimizations */
 @media (max-width: 768px) {
   html {
+    font-size: 15px;
     -webkit-text-size-adjust: 100%;
   }
-  
+
+  body {
+    overscroll-behavior-y: contain;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Prevent zoom on input focus */
   input, select, textarea {
-    font-size: 16px !important; /* Prevent zoom on iOS */
+    font-size: 16px !important;
+  }
+
+  /* Better touch targets */
+  button, a, [role="button"] {
+    min-height: 44px;
   }
 }
 
-/* Scanner container styles */
-#scanner-container {
-  min-height: 200px;
+/* Desktop improvements */
+@media (min-width: 769px) {
+  /* Smooth page transitions */
+  main {
+    animation: fadeIn 0.2s ease-out;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
 }
 
-#scanner-container video {
-  border-radius: 12px;
+/* Number input spinner hide */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }
 
-#scanner-container img {
-  display: none;
+input[type="number"] {
+  -moz-appearance: textfield;
 }
 
-/* Hide scanner UI elements we don't need */
-#scanner-container__dashboard_section_copier,
-#scanner-container__dashboard_section_swaplink {
-  display: none !important;
+/* Focus visible for accessibility */
+:focus-visible {
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
+  border-radius: 8px;
 }

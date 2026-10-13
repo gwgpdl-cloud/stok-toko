@@ -1,149 +1,132 @@
 import React, { useState } from 'react';
 import { useApp } from '../context/AppContext';
-import { Role } from '../types';
-import { Package, Shield, User, Eye, EyeOff } from 'lucide-react';
+import { Package, Shield, User, Store } from 'lucide-react';
 
 export default function LoginPage() {
   const { login } = useApp();
-  const [role, setRole] = useState<Role>('admin');
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [showPassword, setShowPassword] = useState(false);
-  const [error, setError] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
+  const [selectedRole, setSelectedRole] = useState<'admin' | 'operator' | null>(null);
+  const [isLoggingIn, setIsLoggingIn] = useState(false);
 
-  const handleLogin = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setError('');
-    setIsLoading(true);
-    
-    await new Promise(resolve => setTimeout(resolve, 800));
-    
-    const success = login(username, password, role);
-    if (!success) {
-      setError('Username atau password salah!');
-    }
-    setIsLoading(false);
+  const handleLogin = () => {
+    if (!selectedRole) return;
+    setIsLoggingIn(true);
+    setTimeout(() => {
+      login(selectedRole);
+    }, 800);
   };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-600 via-blue-700 to-indigo-800 flex items-center justify-center p-4">
       <div className="w-full max-w-md">
-        {/* Logo */}
+        {/* Logo & Title */}
         <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center w-20 h-20 bg-white/10 backdrop-blur-sm rounded-2xl mb-4 shadow-lg">
+          <div className="inline-flex items-center justify-center w-20 h-20 bg-white/20 backdrop-blur-sm rounded-2xl mb-4">
             <Package className="w-10 h-10 text-white" />
           </div>
-          <h1 className="text-3xl font-bold text-white">StokKu</h1>
-          <p className="text-blue-200 mt-1">Sistem Manajemen Stok Toko</p>
+          <h1 className="text-3xl font-bold text-white mb-2">StokKu</h1>
+          <p className="text-blue-100 text-sm">Sistem Manajemen Stok Toko</p>
         </div>
 
         {/* Login Card */}
-        <div className="bg-white rounded-3xl shadow-2xl p-8">
-          {/* Role Selector */}
-          <div className="mb-6">
-            <label className="text-sm font-medium text-gray-600 mb-2 block">Pilih Role</label>
-            <div className="grid grid-cols-2 gap-3">
-              <button
-                type="button"
-                onClick={() => setRole('admin')}
-                className={`flex flex-col items-center p-4 rounded-xl border-2 transition-all duration-200 ${
-                  role === 'admin'
-                    ? 'border-blue-500 bg-blue-50 shadow-md'
-                    : 'border-gray-200 hover:border-gray-300'
-                }`}
-              >
-                <Shield className={`w-8 h-8 mb-2 ${role === 'admin' ? 'text-blue-600' : 'text-gray-400'}`} />
-                <span className={`font-semibold text-sm ${role === 'admin' ? 'text-blue-700' : 'text-gray-500'}`}>Admin</span>
-                <span className="text-xs text-gray-400 mt-1">Laptop</span>
-              </button>
-              <button
-                type="button"
-                onClick={() => setRole('operator')}
-                className={`flex flex-col items-center p-4 rounded-xl border-2 transition-all duration-200 ${
-                  role === 'operator'
-                    ? 'border-emerald-500 bg-emerald-50 shadow-md'
-                    : 'border-gray-200 hover:border-gray-300'
-                }`}
-              >
-                <User className={`w-8 h-8 mb-2 ${role === 'operator' ? 'text-emerald-600' : 'text-gray-400'}`} />
-                <span className={`font-semibold text-sm ${role === 'operator' ? 'text-emerald-700' : 'text-gray-500'}`}>Operator</span>
-                <span className="text-xs text-gray-400 mt-1">HP</span>
-              </button>
-            </div>
-          </div>
+        <div className="bg-white rounded-3xl shadow-2xl p-6 sm:p-8">
+          <h2 className="text-xl font-semibold text-gray-800 text-center mb-2">Masuk ke Akun</h2>
+          <p className="text-gray-500 text-sm text-center mb-6">Pilih role Anda untuk melanjutkan</p>
 
-          {/* Form */}
-          <form onSubmit={handleLogin} className="space-y-4">
-            <div>
-              <label className="text-sm font-medium text-gray-600 mb-1 block">Username</label>
-              <input
-                type="text"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-                className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-100 outline-none transition-all"
-                placeholder="Masukkan username"
-                required
-              />
-            </div>
-            <div>
-              <label className="text-sm font-medium text-gray-600 mb-1 block">Password</label>
-              <div className="relative">
-                <input
-                  type={showPassword ? 'text' : 'password'}
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-100 outline-none transition-all pr-12"
-                  placeholder="Masukkan password"
-                  required
-                />
-                <button
-                  type="button"
-                  onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
-                >
-                  {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
-                </button>
+          {/* Role Selection */}
+          <div className="space-y-3 mb-6">
+            <button
+              onClick={() => setSelectedRole('admin')}
+              className={`w-full flex items-center gap-4 p-4 rounded-2xl border-2 transition-all duration-200 ${
+                selectedRole === 'admin'
+                  ? 'border-blue-500 bg-blue-50 shadow-md'
+                  : 'border-gray-200 hover:border-blue-300 hover:bg-gray-50'
+              }`}
+            >
+              <div className={`w-12 h-12 rounded-xl flex items-center justify-center ${
+                selectedRole === 'admin' ? 'bg-blue-500' : 'bg-gray-100'
+              }`}>
+                <Shield className={`w-6 h-6 ${selectedRole === 'admin' ? 'text-white' : 'text-gray-500'}`} />
               </div>
-            </div>
-
-            {error && (
-              <div className="bg-red-50 text-red-600 text-sm p-3 rounded-xl flex items-center gap-2">
-                <span>⚠️</span> {error}
+              <div className="text-left flex-1">
+                <p className="font-semibold text-gray-800">Admin</p>
+                <p className="text-xs text-gray-500">Menggunakan Laptop / Desktop</p>
               </div>
-            )}
+              {selectedRole === 'admin' && (
+                <div className="w-5 h-5 bg-blue-500 rounded-full flex items-center justify-center">
+                  <svg className="w-3 h-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
+                  </svg>
+                </div>
+              )}
+            </button>
 
             <button
-              type="submit"
-              disabled={isLoading}
-              className={`w-full py-3.5 rounded-xl text-white font-semibold transition-all duration-200 shadow-lg ${
-                role === 'admin'
-                  ? 'bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700'
-                  : 'bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-600 hover:to-emerald-700'
-              } ${isLoading ? 'opacity-70 cursor-not-allowed' : 'hover:shadow-xl active:scale-[0.98]'}`}
+              onClick={() => setSelectedRole('operator')}
+              className={`w-full flex items-center gap-4 p-4 rounded-2xl border-2 transition-all duration-200 ${
+                selectedRole === 'operator'
+                  ? 'border-emerald-500 bg-emerald-50 shadow-md'
+                  : 'border-gray-200 hover:border-emerald-300 hover:bg-gray-50'
+              }`}
             >
-              {isLoading ? (
-                <span className="flex items-center justify-center gap-2">
-                  <svg className="animate-spin w-5 h-5" viewBox="0 0 24 24"><circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none"/><path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"/></svg>
-                  Memproses...
-                </span>
-              ) : 'Masuk'}
+              <div className={`w-12 h-12 rounded-xl flex items-center justify-center ${
+                selectedRole === 'operator' ? 'bg-emerald-500' : 'bg-gray-100'
+              }`}>
+                <User className={`w-6 h-6 ${selectedRole === 'operator' ? 'text-white' : 'text-gray-500'}`} />
+              </div>
+              <div className="text-left flex-1">
+                <p className="font-semibold text-gray-800">Operator</p>
+                <p className="text-xs text-gray-500">Menggunakan HP / Mobile</p>
+              </div>
+              {selectedRole === 'operator' && (
+                <div className="w-5 h-5 bg-emerald-500 rounded-full flex items-center justify-center">
+                  <svg className="w-3 h-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
+                  </svg>
+                </div>
+              )}
             </button>
-          </form>
+          </div>
 
-          {/* Demo credentials */}
-          <div className="mt-6 p-4 bg-gray-50 rounded-xl">
-            <p className="text-xs font-medium text-gray-500 mb-2">Demo Credentials:</p>
-            <div className="space-y-1">
+          {/* Login Button */}
+          <button
+            onClick={handleLogin}
+            disabled={!selectedRole || isLoggingIn}
+            className={`w-full py-4 rounded-2xl font-semibold text-white transition-all duration-200 ${
+              selectedRole
+                ? selectedRole === 'admin'
+                  ? 'bg-blue-600 hover:bg-blue-700 active:scale-[0.98] shadow-lg shadow-blue-200'
+                  : 'bg-emerald-600 hover:bg-emerald-700 active:scale-[0.98] shadow-lg shadow-emerald-200'
+                : 'bg-gray-300 cursor-not-allowed'
+            }`}
+          >
+            {isLoggingIn ? (
+              <span className="flex items-center justify-center gap-2">
+                <svg className="animate-spin w-5 h-5" fill="none" viewBox="0 0 24 24">
+                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
+                </svg>
+                Memasuk...
+              </span>
+            ) : (
+              'Masuk'
+            )}
+          </button>
+
+          {/* Info */}
+          <div className="mt-6 p-3 bg-gray-50 rounded-xl">
+            <div className="flex items-start gap-2">
+              <Store className="w-4 h-4 text-gray-400 mt-0.5" />
               <p className="text-xs text-gray-500">
-                <span className="font-semibold">Admin:</span> admin / admin123
-              </p>
-              <p className="text-xs text-gray-500">
-                <span className="font-semibold">Operator:</span> operator / operator123
+                <strong>Admin</strong> memiliki akses penuh termasuk laporan masuk/keluar barang. 
+                <strong> Operator</strong> fokus pada operasional toko dan scan barcode.
               </p>
             </div>
           </div>
         </div>
+
+        <p className="text-center text-blue-200 text-xs mt-6">
+          StokKu v1.0 © 2025
+        </p>
       </div>
     </div>
   );
