@@ -38,7 +38,7 @@ function AppContent() {
         {renderPage()}
       </main>
       {/* Desktop Layout */}
-      <main className="hidden md:block md:ml-64 min-h-screen">
+      <main className="hidden md:block md:ml-72 min-h-screen">
         {renderPage()}
       </main>
     </div>
