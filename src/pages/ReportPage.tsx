@@ -68,7 +68,7 @@ export default function ReportPage() {
       >
         <Filter className="w-4 h-4" />
         Filter & Pencarian
-        <span className="text-[10px]">{showFilters ? '▲' : '▼'}</span>
+        <span className="text-[10px]">{showFilters ? '^' : 'v'}</span>
       </button>
 
       {/* Filters */}
@@ -183,8 +183,8 @@ export default function ReportPage() {
                       {t.type === 'in' ? 'Masuk' : t.type === 'out' ? 'Keluar' : 'Transfer'}
                     </span>
                     <span className="text-[10px] text-gray-400">
-                      {t.from === 'gudang' ? '📦' : '🏪'}
-                      {t.to && ` → ${t.to === 'gudang' ? '📦' : '🏪'}`}
+                      {t.from === 'gudang' ? 'Gudang' : 'Toko'}
+                      {t.to && ` ke ${t.to === 'gudang' ? 'Gudang' : 'Toko'}`}
                     </span>
                   </div>
                 </div>
@@ -192,7 +192,7 @@ export default function ReportPage() {
                   <p className={`text-sm font-bold ${
                     t.type === 'in' ? 'text-green-600' : t.type === 'out' ? 'text-red-600' : 'text-blue-600'
                   }`}>
-                    {t.type === 'in' ? '+' : t.type === 'out' ? '-' : '↔'}{t.quantity}
+                    {t.type === 'in' ? '+' : t.type === 'out' ? '-' : '~'}{t.quantity}
                   </p>
                   <p className="text-[10px] text-gray-400 mt-0.5">
                     {new Date(t.date).toLocaleDateString('id-ID', { day: 'numeric', month: 'short' })}

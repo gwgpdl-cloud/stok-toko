@@ -20,7 +20,7 @@ export default function DashboardPage() {
     <div className="px-4 py-4 md:px-6 md:py-6 pb-6">
       {/* Header */}
       <div className="mb-5">
-        <p className="text-sm text-gray-500 font-medium">{greeting}, 👋</p>
+        <p className="text-sm text-gray-500 font-medium">{greeting},</p>
         <h1 className="text-xl md:text-2xl font-bold text-gray-900 mt-0.5">
           {user?.name}
         </h1>
@@ -108,7 +108,7 @@ export default function DashboardPage() {
               onClick={() => setCurrentPage('stock')}
               className="text-xs text-blue-600 font-semibold active:opacity-70"
             >
-              Lihat →
+              Lihat
             </button>
           </div>
           <div className="space-y-2">
@@ -120,8 +120,8 @@ export default function DashboardPage() {
                 <div className="flex-1 min-w-0">
                   <p className="font-semibold text-gray-800 text-sm truncate">{product.name}</p>
                   <div className="flex items-center gap-2 mt-0.5">
-                    <span className="text-[11px] text-purple-600 font-medium">📦 {product.stockGudang}</span>
-                    <span className="text-[11px] text-emerald-600 font-medium">🏪 {product.stockToko}</span>
+                    <span className="text-[11px] text-purple-600 font-medium">Gudang: {product.stockGudang}</span>
+                    <span className="text-[11px] text-emerald-600 font-medium">Toko: {product.stockToko}</span>
                   </div>
                 </div>
                 <span className="text-[10px] bg-amber-100 text-amber-700 px-2 py-1 rounded-lg font-bold">
@@ -145,7 +145,7 @@ export default function DashboardPage() {
               onClick={() => setCurrentPage('report')}
               className="text-xs text-blue-600 font-semibold active:opacity-70"
             >
-              Semua →
+              Semua
             </button>
           )}
         </div>
@@ -173,14 +173,14 @@ export default function DashboardPage() {
                   <div className="flex-1 min-w-0">
                     <p className="font-semibold text-gray-800 text-sm truncate">{t.productName}</p>
                     <p className="text-[11px] text-gray-400 mt-0.5">
-                      {t.type === 'in' ? 'Masuk' : t.type === 'out' ? 'Keluar' : 'Transfer'} • {t.quantity} {t.from === 'gudang' ? 'gudang' : 'toko'}
+                      {t.type === 'in' ? 'Masuk' : t.type === 'out' ? 'Keluar' : 'Transfer'} | {t.quantity} {t.from === 'gudang' ? 'gudang' : 'toko'}
                     </p>
                   </div>
                   <div className="text-right flex-shrink-0">
                     <p className={`text-sm font-bold ${
                       t.type === 'in' ? 'text-green-600' : t.type === 'out' ? 'text-red-600' : 'text-blue-600'
                     }`}>
-                      {t.type === 'in' ? '+' : t.type === 'out' ? '-' : '↔'}{t.quantity}
+                      {t.type === 'in' ? '+' : t.type === 'out' ? '-' : '~'}{t.quantity}
                     </p>
                     <p className="text-[10px] text-gray-400 mt-0.5">
                       {new Date(t.date).toLocaleDateString('id-ID', { day: 'numeric', month: 'short' })}

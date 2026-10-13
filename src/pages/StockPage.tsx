@@ -31,7 +31,7 @@ export default function StockPage() {
       quantity: qty,
       from: direction === 'gudang-to-toko' ? 'gudang' : 'toko',
       to: direction === 'gudang-to-toko' ? 'toko' : 'gudang',
-      note: `Transfer ${direction === 'gudang-to-toko' ? 'Gudang → Toko' : 'Toko → Gudang'}`,
+      note: `Transfer ${direction === 'gudang-to-toko' ? 'Gudang ke Toko' : 'Toko ke Gudang'}`,
       user: user?.name || 'Unknown',
     });
     setShowTransferModal(null);
@@ -107,7 +107,7 @@ export default function StockPage() {
                   <div className="flex items-start justify-between gap-2">
                     <div className="min-w-0 flex-1">
                       <h3 className="font-bold text-gray-900 text-sm truncate">{product.name}</h3>
-                      <p className="text-[11px] text-gray-400 mt-0.5">{product.barcode} • {product.category}</p>
+                      <p className="text-[11px] text-gray-400 mt-0.5">{product.barcode} | {product.category}</p>
                     </div>
                     <div className="flex items-center gap-0.5 flex-shrink-0">
                       <button
@@ -214,14 +214,14 @@ export default function StockPage() {
                 disabled={!transferQty || parseInt(transferQty) <= 0}
                 className="py-3 bg-emerald-600 text-white rounded-xl font-semibold text-sm hover:bg-emerald-700 disabled:opacity-50 disabled:cursor-not-allowed active:scale-95 transition-all shadow-lg shadow-emerald-200"
               >
-                Gudang → Toko
+                Gudang ke Toko
               </button>
               <button
                 onClick={() => handleTransfer(showTransferModal, 'toko-to-gudang')}
                 disabled={!transferQty || parseInt(transferQty) <= 0}
                 className="py-3 bg-purple-600 text-white rounded-xl font-semibold text-sm hover:bg-purple-700 disabled:opacity-50 disabled:cursor-not-allowed active:scale-95 transition-all shadow-lg shadow-purple-200"
               >
-                Toko → Gudang
+                Toko ke Gudang
               </button>
             </div>
           </div>

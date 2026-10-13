@@ -192,7 +192,7 @@ export default function ScannerPage() {
             </div>
             <div className="flex-1 min-w-0">
               <h3 className="font-bold text-gray-900 text-sm truncate">{foundProduct.name}</h3>
-              <p className="text-[11px] text-gray-400">{foundProduct.barcode} • {foundProduct.category}</p>
+              <p className="text-[11px] text-gray-400">{foundProduct.barcode} | {foundProduct.category}</p>
             </div>
             <button onClick={resetForm} className="p-2 hover:bg-gray-100 rounded-xl active:scale-90">
               <X className="w-4 h-4 text-gray-400" />
@@ -261,7 +261,7 @@ export default function ScannerPage() {
                 onClick={() => setQuantity(Math.max(1, parseInt(quantity) - 1).toString())}
                 className="w-14 h-14 bg-gray-100 rounded-xl text-2xl font-bold text-gray-600 flex items-center justify-center active:bg-gray-200 active:scale-90 transition-all"
               >
-                −
+                -
               </button>
               <input
                 type="number"
@@ -308,7 +308,7 @@ export default function ScannerPage() {
                       : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
                   }`}
                 >
-                  Gudang → Toko
+                  Gudang ke Toko
                 </button>
                 <button
                   onClick={() => setTransferTo('gudang')}
@@ -318,7 +318,7 @@ export default function ScannerPage() {
                       : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
                   }`}
                 >
-                  Toko → Gudang
+                  Toko ke Gudang
                 </button>
               </div>
             </div>
@@ -347,7 +347,7 @@ export default function ScannerPage() {
                 : 'bg-blue-600 hover:bg-blue-700 shadow-blue-200'
             }`}
           >
-            {actionType === 'in' ? '✓ Barang Masuk' : actionType === 'out' ? '✓ Barang Keluar' : '✓ Transfer Stok'}
+            {actionType === 'in' ? 'Barang Masuk' : actionType === 'out' ? 'Barang Keluar' : 'Transfer Stok'}
           </button>
         </div>
       )}
@@ -384,10 +384,10 @@ export default function ScannerPage() {
                 </div>
                 <div className="text-right flex-shrink-0">
                   <p className="text-[10px] text-gray-500 font-medium">
-                    📦{product.stockGudang}
+                    Gd: {product.stockGudang}
                   </p>
                   <p className="text-[10px] text-gray-500 font-medium">
-                    🏪{product.stockToko}
+                    Tk: {product.stockToko}
                   </p>
                 </div>
               </button>

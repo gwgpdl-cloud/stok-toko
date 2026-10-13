@@ -125,7 +125,7 @@ export default function LoginPage() {
         </div>
 
         <p className="text-center text-blue-200 text-xs mt-5">
-          StokKu v1.0 © 2025
+          StokKu v1.0 (c) 2025
         </p>
       </div>
     </div>

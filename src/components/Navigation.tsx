@@ -55,7 +55,7 @@ export default function Navigation() {
               <div className="flex-1">
                 <p className="font-semibold text-gray-800 text-sm">{user?.name}</p>
                 <p className={`text-xs font-medium ${isAdmin ? 'text-blue-600' : 'text-emerald-600'}`}>
-                  {isAdmin ? '🖥️ Admin • Desktop' : '📱 Operator • Mobile'}
+                  {isAdmin ? 'Admin - Desktop' : 'Operator - Mobile'}
                 </p>
               </div>
             </div>
